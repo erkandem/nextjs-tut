@@ -165,3 +165,12 @@ npm install -D sass
 Ref.: 
  - postcss https://www.youtube.com/watch?v=WhCXiEwdU1A
  - styling tech in general https://www.youtube.com/watch?v=ouncVBiye_M
+
+## C4 -Pre-rendering and Data Fetching
+
+
+Step: https://nextjs.org/learn/basics/data-fetching/setup
+
+https://tailwindcss.com/
+https://github.com/unicodeveloper/awesome-nextjs?search=1
+https://nextjs.org/docs
