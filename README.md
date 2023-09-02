@@ -3,6 +3,7 @@ This is a starter template for [Learn Next.js](https://nextjs.org/learn).
 
 ## C1 - Create a Next.js App - Setup
 
+Chapter Link: https://nextjs.org/learn/basics/create-nextjs-app
 
     nvm use 18
     
@@ -10,6 +11,7 @@ This is a starter template for [Learn Next.js](https://nextjs.org/learn).
 
 ## C2 - Navigate Between Pages
 
+Chapter Link: https://nextjs.org/learn/basics/navigate-between-pages
 ### Creating New Pages
 
  - depends on file system
@@ -32,6 +34,7 @@ Refs:
 
 ## C3 - Assets, Metadata, and CSS
 
+Chapter Link: https://nextjs.org/learn/basics/assets-metadata-css
 ### Assets
 
  - `public` folder for assets
@@ -166,10 +169,118 @@ Ref.:
  - postcss https://www.youtube.com/watch?v=WhCXiEwdU1A
  - styling tech in general https://www.youtube.com/watch?v=ouncVBiye_M
 
-## C4 -Pre-rendering and Data Fetching
+## C4 - Pre-rendering and Data Fetching
 
+Lesson goals:
 
+ - pre-rendering feature
+ - static and server side rendering
+ - static generation with data and without
+ - getStaticProps
 Step: https://nextjs.org/learn/basics/data-fetching/setup
+
+### pre-rendering overview
+
+a) static rendering
+
+> Complete static HTML can be hosted by e.g. nginx
+
+typical: Marketing pages
+
+b) server side rendering
+
+> creates the HTML for each request
+
+ - run some of the js in the background and return some of the app as html
+ - each way, saves time on client side to render vs pure react app
+ - use static if not much dynamic elements are present (i.e. data is updated)
+ - static/server side can be configured on page level
+
+### static
+ - example to get data from the filesystem and include it into our component
+
+
+```js
+export async function getStaticProps() {
+    const allPostsData = getSortedPostsData(); // external calls 
+    return {
+        props: {
+            allPostsData,
+        },
+    };
+}
+```
+ - Within the component module, above the functional component:
+ - convention name `getStaticProps`
+ - returns  `{props: { <prop name>: <prop value>}}` or short `{props: {variableName}}` (Object Property Shorthand)
+ - runs only on the server side (that's why we were able to use nodes API)
+ - runs on every request in `dev` mode
+ - runs __once__ at build time
+ - can only be exported from a [page](https://nextjs.org/docs/basic-features/pages)
+
+We could just as well do an external API call instead of reading
+files from the local file system
+```js
+export async function getSortedPostsData() {
+  // Instead of the file system,
+  // fetch post data from an external API endpoint
+  const res = await fetch('..');
+  return res.json();
+}
+```
+
+or DB calls
+
+```js
+import someDatabaseSDK from 'someDatabaseSDK'
+
+const databaseClient = someDatabaseSDK.createClient(...)
+
+export async function getSortedPostsData() {
+  // Instead of the file system,
+  // fetch post data from a database
+  return databaseClient.query('SELECT posts...')
+}
+```
+Ref.: 
+ - [getstaticprops](https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation)
+
+### Fetching Data at Request Time
+
+ - to fetch non-static data
+> You should use getServerSideProps only if you need to pre-render a page whose data must be fetched at request time.
+
+```js
+export async function getServerSideProps(context) {
+    // magic
+  return {
+    props: {
+      // props for your component
+    },
+  };
+}
+```
+Ref.:
+- [getServerSideProps](https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering)
+
+#### Client-side Rendering
+
+ - use case: dashboard, it's private, we will need creds before we can render anything
+ - `SWR` Next.js way of what we could do with `useEffect`
+Ref.:
+- [Client-side data fetching with SWR] (https://nextjs.org/docs/pages/building-your-application/data-fetching/client-side#client-side-data-fetching-with-swr)
+
+
+
+Node specific details:
+ - fs is a Node.js module that let's you read files from the file system.
+ - path is a Node.js module that let's you manipulate file paths.
+ - matter is a library that let's you parse the metadata in each markdown file.
+
+## C5 - Dynamic Routes
+Chapter Link: https://nextjs.org/learn/basics/dynamic-routes
+
+
 
 https://tailwindcss.com/
 https://github.com/unicodeveloper/awesome-nextjs?search=1
