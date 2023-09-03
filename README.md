@@ -390,8 +390,24 @@ export default function handler(req, res) {
  - [res](https://nodejs.org/api/http.html#http_class_http_serverresponse)
 
 
+## C7 - Deployment
+
+Chapter Link: https://nextjs.org/learn/basics/deploying-nextjs-app/
+
+### workflow for Vercel
+ - create Vercel account
+ - connect Vercel to Github Account
+ - import repo
+ - deploy: https://nextjs-tut-blue.vercel.app/
+ - any new push will auto-magically trigger redeploy
+
+### Vercel advantages: 
+ - https out of the box
+ - custom domain can be mapped
+ - admin interface for environment variables
+ - PR preview
 
 
-https://tailwindcss.com/
+ - https://tailwindcss.com/
 https://github.com/unicodeveloper/awesome-nextjs?search=1
 https://nextjs.org/docs
