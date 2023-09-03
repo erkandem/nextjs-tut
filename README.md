@@ -278,10 +278,84 @@ Node specific details:
  - matter is a library that let's you parse the metadata in each markdown file.
 
 ## C5 - Dynamic Routes
+
 Chapter Link: https://nextjs.org/learn/basics/dynamic-routes
 
+ - dynamic paths need a `[id].js` within a subfolder
+ - it contains
+   - the React component on how to render the data
+   - `getStaticPaths` to tell next.js what paths do exists
+   - and `getStaticProps` to tell next.js what to render on each dynamic route
 
 
+### getStaticPaths
+
+ - runs with every request in `dev`
+ - runs __once__ at build time in `prod`
+ - expects `paths` to be of `[{params: {id: 'theActualId'},...]` format
+
+```js 
+export async function getStaticPaths() {
+  const paths = getAllPostIds();
+  return {
+    paths,
+    fallback: false,
+  };
+}
+```
+
+Ref.:
+ - [getStaticPaths](https://nextjs.org/docs/pages/building-your-application/data-fetching/get-static-paths)
+
+### get static props
+
+```js
+export async function getStaticProps({params}) {
+    const postData = await getPostData(params.id);
+    return {
+        props: {
+            postData,
+        }
+    };
+}
+```
+#### In case of external data
+
+ - ... the utility function could do a DB query or an API query:
+```js 
+export async function getAllPostIds() {
+  // Instead of the file system,
+  // fetch post data from an external API endpoint
+  const res = await fetch('..');
+  const posts = await res.json();
+  return posts.map((post) => {
+    return {
+      params: {
+        id: post.id,
+      },
+    };
+  });
+}
+
+```
+### Dynamic Page Layout
+
+ - in the case of markdown, `dangerouslySetInnerHTML` can be used
+ - in combo with [`remark`](https://github.com/remarkjs/remark) library
+ - and [`remark-html`](https://github.com/remarkjs/remark-html)
+ - additionally [`date-fns`](https://date-fns.org/) was introduced for date formatting
+
+### Index Route
+ - since we already have posts metadata (including the ide)
+ - `<Link href={`/posts/${id}`}>{title}</Link>`
+
+### Error Pages
+
+ - custom 404 page can be created within `pages`: `pages/404`
+ - same for 500
+
+Ref.: 
+ - [Error Pages](https://nextjs.org/docs/pages/building-your-application/routing/custom-error)
 https://tailwindcss.com/
 https://github.com/unicodeveloper/awesome-nextjs?search=1
 https://nextjs.org/docs
