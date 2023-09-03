@@ -356,6 +356,42 @@ export async function getAllPostIds() {
 
 Ref.: 
  - [Error Pages](https://nextjs.org/docs/pages/building-your-application/routing/custom-error)
+
+## C6 - API Routes
+
+Chapter link: https://nextjs.org/learn/basics/api-routes
+
+ - offers independent API routes
+ - can be [dynamic](https://nextjs.org/docs/pages/building-your-application/routing/api-routes#dynamic-api-routes)
+   as well just like pages
+ - use cases
+   - can be used to save form input directly to the database
+   - preview route
+ - not to be used within `getStaticProps`, `getStaticPaths`
+   since we can avoid the HTTP traffic altogether with 
+   a utility function (i.e. which could be called by both `getStatic*` and the API route handler)
+
+
+```js
+// pages/api/hello.js
+// accessable at http://localhost:3000/api/hello
+export default function handler(req, res) {
+  res.status(200).json({ text: 'Hello' });
+}
+```
+
+ - [Api Routes Docs](https://nextjs.org/docs/pages/building-your-application/routing/api-routes)
+   - ["Serverless" example](https://github.com/vercel/next.js/tree/canary/examples/api-routes)
+   - [REST example](https://github.com/vercel/next.js/tree/canary/examples/api-routes-rest)
+   - [GraphQL example](https://github.com/vercel/next.js/blob/canary/examples/api-routes-graphql)
+   - [CORS](https://github.com/vercel/next.js/tree/canary/examples/api-routes-cors)
+   - [CORS Reacap](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
+ - [req](https://nodejs.org/api/http.html#http_class_http_incomingmessage)
+ - [res](https://nodejs.org/api/http.html#http_class_http_serverresponse)
+
+
+
+
 https://tailwindcss.com/
 https://github.com/unicodeveloper/awesome-nextjs?search=1
 https://nextjs.org/docs
